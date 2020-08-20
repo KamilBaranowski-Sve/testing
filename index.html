@@ -1,32 +1,119 @@
+<!--
+Kamil Baranowski
+kaba1903
+kaba1903@student.miun.se
+-->
+
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
+
 
 <head>
-  <meta charset="utf-8">
-  <title>Drum Kit</title>
-  <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css?family=Arvo" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Type fast!</title>
+
+    <!-- Links -->
+    <!-- CSS stylesheet -->
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <!-- Google fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text&display=swap" rel="stylesheet">
+
+    <script src="js/main.js"></script>
+
 </head>
+
 
 <body>
 
-  <h1 id="title">Drum 🥁 Kit</h1>
-  <div class="set">
-    <button class="w drum">w</button>
-    <button class="a drum">a</button>
-    <button class="s drum">s</button>
-    <button class="d drum">d</button>
-    <button class="j drum">j</button>
-    <button class="k drum">k</button>
-    <button class="l drum">l</button>
-  </div>
+<!-- Header -->
+<header id="header">
+    <section id="logo">
+        <img src="img/typewriter.jpg" alt="Typewriter">
+    </section>
+
+    <img src="img/animate.png" alt="image" id="animate">
+
+    <section id="site_name">
+        TYPE FAST
+    </section>
+
+</header>
+
+<!-- Main -->
+<main>
+<!-- Navigation -->
+<nav id="navigation">
+    <form id="form_settings">
+        <label><input type="checkbox" id="ignore_cases">Ignore cases</label>
+        <fieldset>
+            <legend>Language</legend>
+            <label><input type="radio" value="1" id="language_swedish" name="language" checked>Swedish</label>
+            <label><input type="radio" value="2" id="language_english" name="language">English</label>
+        </fieldset>
+    </form>
 
 
-  <footer>
-    Made with ❤️ in London.
-  </footer>
 
-  <script src="index.js" charset="UTF-8"></script>
+    <section id="choose_text">
+        <h5>Choose text</h5>
+        <label for="choose_text_list"></label><select id="choose_text_list">
+                <option></option>
+            </select>
+    </section>
+</nav>
+
+<!-- Article - Touch typing -->
+<article id="touch_typing">
+
+    <section id="text_details">
+        <h4 id="text_title">Title</h4>
+
+        <h5 id="text_author">Author</h5>
+
+        <section id="type_area_text">
+            <article id="textarea"></article>
+        </section>
+    </section>
+
+    <section id="type_area">
+        <label><input type="text" id="type_here" value = "" name="type_here" placeholder="Type here..." autocomplete="off"></label>
+    </section>
+
+    <section id="control">
+        <button type="button" id="control_button"></button>
+    </section>
+
+</article>
+
+
+<!-- Stats -->
+<article id="stats">
+
+    <article>
+        <section id="gross_WPM">Gross WPM: </section>
+        <section id="accuracy">Accuracy: </section>
+    </article>
+
+    <article>
+        <section id="net_WPM">Net WPM: </section>
+        <section id="errors">Errors:</section>
+    </article>
+
+</article>
+
+</main>
+
+<!-- Footer -->
+<footer id="footer">
+    <span>&copy; Kamil Baranowski. All rights reserved.</span>
+    <br>
+    <span><a href="mailto:kaba1903@student.miun.se">Contact me!</a></span>
+</footer>
+
 </body>
 
 </html>

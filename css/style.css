@@ -1,0 +1,288 @@
+body{
+    /* Background pattern from Toptal Subtle Patterns */
+    background-image: url("../img/background.png");
+    font-family: 'Lato', sans-serif;
+    font-size: 20px;
+    margin: 0 !important;
+    padding: 0;
+    color: #81A684;
+}
+
+
+/* HEADER SECTION */
+#header{
+    width: 600px;
+    height: 140px;
+    margin: 50px auto 30px auto;
+    clear: both;
+}
+
+#logo{
+    width: 140px;
+    height: 140px;
+    line-height: 140px;
+    float: left;
+    text-align: center;
+    top: 50%;
+}
+
+#logo img{
+    height: 140px;
+    width: 140px;
+    border-radius: 30px;
+}
+
+#site_name{
+    width: 440px;
+    height: 140px;
+    line-height: 140px;
+    float: left;
+    text-align: left;
+    font-family: 'Shadows Into Light', cursive;
+    font-size: 86px;
+    margin-left: 20px;
+}
+
+
+/* NAVIGATION SECTION */
+#navigation{
+    width: 600px;
+    height: 130px;
+    margin-left: auto;
+    margin-right: auto;
+    clear: both;
+    background-color: lightgray;
+}
+
+#form_settings{
+    width: 300px;
+    height: 130px;
+    float: left;
+    background-color: #466060;
+}
+
+#ignore_cases{
+    margin: 15px 10px 0 15px;
+}
+
+fieldset{
+    margin: 10px 60px 10px 10px;
+}
+
+#choose_text{
+    width: 300px;
+    height: 130px;
+    margin: 0;
+    float: left;
+    background-color: #466060;
+}
+
+#choose_text h5{
+    margin: 10px;
+    font-family: 'Lato', sans-serif;
+    font-size: 20px;
+}
+
+#choose_text select{
+    margin: 0 10px 10px 10px;
+    font-family: 'Lato', sans-serif;
+    font-size: 15px;
+    border: none;
+    background-color: #0E0F19;
+    color: #F8C7CC;
+    padding: 4px;
+}
+
+
+/* MAIN SECTION */
+#touch_typing{
+    width: 600px;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    clear: both;
+    background-color: #466060;
+}
+
+#text_details{
+    width: 560px;
+    height: auto;
+    margin-left: 18px;
+    clear: both;
+    background-color: #0E0F19;
+    border: #F8C7CC solid 2px;
+    border-radius: 10px;
+}
+
+#touch_typing h4{
+    text-align: center;
+    font-family: 'Lato', sans-serif;
+    font-size: 20px;
+    padding: 20px 0 5px 0;
+    margin: 0;
+}
+
+#touch_typing h5{
+    text-align: center;
+    font-family: 'Lato', sans-serif;
+    font-size: 16px;
+    margin: 0;
+}
+
+#type_area_text{
+    padding: 0;
+}
+
+#textarea{
+    width: 544px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0;
+    height: 275px;
+    background-color: #0E0F19;
+    resize: none;
+    font-size: 24px;
+    font-family: 'Crimson Text', serif;
+    color: #F8C7CC;
+}
+
+#type_area{
+    width: 600px;
+    height: 50px;
+    line-height: 50px;
+    background-color: #466060;
+    text-align: center;
+}
+
+#control{
+    width: 600px;
+    height:60px;
+    line-height: 40px;
+    background-color: #466060;
+    text-align: center;
+}
+
+#control_button{
+    width: 60px;
+    height: 60px;
+    border: 0;
+    cursor: pointer;
+    background-color: #466060;
+    background-image: url('../img/start_button.png');
+    background-size: cover;
+}
+
+
+/* ARTICLE STATS SECTION */
+#stats{
+    width: 600px;
+    height: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    clear: both;
+    background-color: #466060;
+}
+
+#gross_WPM{
+    height: 20px;
+    width: 200px;
+    margin-left: 25px;
+    padding-top: 5px;
+    background-color: #466060;
+    float: left;
+    font-size: 16px;
+}
+
+#net_WPM{
+    height: 20px;
+    width: 200px;
+    margin-left: 25px;
+    padding-top: 5px;
+    background-color: #466060;
+    float: left;
+    font-size: 16px;
+}
+
+#accuracy{
+    height: 20px;
+    width: 200px;
+    margin: 0;
+    padding-top: 5px;
+    background-color: #466060;
+    float: left;
+    font-size: 16px;
+}
+
+#errors{
+    height: 20px;
+    width: 200px;
+    margin: 0;
+    padding-top: 5px;
+    background-color: #466060;
+    float: left;
+    font-size: 16px;
+}
+
+
+/* FOOTER SECTION */
+#footer{
+    clear: both;
+    width: 600px;
+    height: 45px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    font-size: 14px;
+    background-color: #466060;
+    border-top: darkgreen solid 2px;
+}
+
+#footer span{
+    display: inline-block;
+    margin-top: 3px;
+    color: #81A684;
+}
+
+#footer span a{
+    text-decoration: none;
+    color: #81A684;
+}
+
+#section1{
+    width: 150px;
+    height: 150px;
+    background-color: #466060;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+/* STYLES FOR TEXT CONTROL */
+.highlighter{
+    background-color: #81A684;
+}
+
+.redLetter{
+    color: red;
+}
+
+.grayLetter{
+    color: gray;
+}
+
+/* STYLES FOR ANIMATION */
+#animate{
+    position: absolute;
+    height: 35px;
+    width: 35px;
+    top: 100px;
+    left: 910px;
+    animation-name: rotate;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes rotate {
+    from{transform: rotate(0deg)}
+    from{transform: rotate(360deg)}
+}
