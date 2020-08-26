@@ -14,12 +14,56 @@ function prepareText() {
 
     // XML request
     const xmlRequest = new XMLHttpRequest();
-    xmlRequest.open('GET', 'http://studenter.miun.se/~kaba1903/XML/texts.xml');
+    xmlRequest.open('GET', '../texts.xml');
+
+
+    const textsObject = [
+        {
+            id: 0,
+            title: "Katherine",
+            author: "Abraham Lincoln",
+            language: "english",
+            text: "I am not bound to win, but I am bound to be true. I am not bound to succeed, but I am bound to live by the light that I have. I must stand with anybody that stands right, and stand with him while he is right, and part with him when he goes wrong."
+        },
+        {
+            id: 1,
+            title: "Love and Weirdness",
+            author: "Dr. Seuss",
+            language: "english",
+            text: "We are all a little weird and life's a little weird, and when we find someone whose weirdness is compatible with ours, we join up with them and fall in mutual weirdness and call it love."
+        },
+        {
+            id: 2,
+            title: "Integrity",
+            author: "Francis Bacon",
+            language: "english",
+            text: "It's not what we eat but what we digest that makes us strong; not what we gain but what we save that makes us rich; not what we read but what we remember that makes us learned; and not what we profess but what we practice that gives us integrity."
+        },
+        {
+            id: 3,
+            title: "The Odyssey",
+            author: "Homer",
+            language: "english",
+            text: "May the gods grant you all things which your heart desires, and may they give you a husband and a home and gracious concord, for there is nothing greater and better than this - when a husband and wife keep a household in oneness of mind, a great woe to their enemies and joy to their friends, and win high renown."
+        }
+    ];
+
+
+    console.log(textsObject[0].author);
+
+    let authorsTemp = textsObject.map(function (textEntry){
+        return textEntry.author;
+    })
+
+    console.log(authorsTemp);
 
     xmlRequest.onload = () => {
         const data = xmlRequest.response;
         let parser = new DOMParser();
         let xml = parser.parseFromString(data, 'application/xml');
+
+
+
         // adding data into texts arrays
         let titles = xml.getElementsByTagName('title');
         let authors = xml.getElementsByTagName('author');
