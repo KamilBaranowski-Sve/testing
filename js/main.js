@@ -1,22 +1,5 @@
 function prepareText() {
-    // english texts
-    let textEnglishTitle = [];
-    let textEnglishAuthor = [];
-    let textEnglishText = [];
-
-// swedish texts
-    let textSwedishTitle = [];
-    let textSwedishAuthor = [];
-    let textSwedishText = [];
-
-    // check ignore_cases setting
-    let ignoreCasesButtonChecked = document.getElementById('ignore_cases').checked;
-
-    // XML request
-    const xmlRequest = new XMLHttpRequest();
-    xmlRequest.open('GET', '../texts.xml');
-
-
+    // preparing texts
     const textsObject = [
         {
             id: 0,
@@ -48,170 +31,132 @@ function prepareText() {
         }
     ];
 
+    // adding data from texts array of objects, to separate arrays
+    // titles
+    let titles = textsObject.map(function (textEntry) {
+        return textEntry.title;
+    })
 
-    console.log(textsObject[0].author);
-
-    let authorsTemp = textsObject.map(function (textEntry){
+    // authors
+    let authors = textsObject.map(function (textEntry) {
         return textEntry.author;
     })
 
-    console.log(authorsTemp);
+    // texts
+    let texts = textsObject.map(function (textEntry) {
+        return textEntry.text;
+    })
 
-    xmlRequest.onload = () => {
-        const data = xmlRequest.response;
-        let parser = new DOMParser();
-        let xml = parser.parseFromString(data, 'application/xml');
+    // check ignore_cases setting
+    let ignoreCasesButtonChecked = document.getElementById('ignore_cases').checked;
 
 
+    // creating additional options inside Choose text menu
+    let languageEnglish = document.getElementById('language_english');
+    let numberTexts;
 
-        // adding data into texts arrays
-        let titles = xml.getElementsByTagName('title');
-        let authors = xml.getElementsByTagName('author');
-        let languages = xml.getElementsByTagName('language');
-        let texts = xml.getElementsByTagName('text');
+    numberTexts = titles.length;
 
-        for (let i = 0; i < languages.length; i++) {
-            if (languages[i].firstChild.nodeValue === "english") {
-                textEnglishTitle.push(titles[i].firstChild.nodeValue);
-                textEnglishAuthor.push(authors[i].firstChild.nodeValue);
-                textEnglishText.push(texts[i].firstChild.nodeValue);
-            } else if (languages[i].firstChild.nodeValue === "swedish") {
-                textSwedishTitle.push(titles[i].firstChild.nodeValue);
-                textSwedishAuthor.push(authors[i].firstChild.nodeValue);
-                textSwedishText.push(texts[i].firstChild.nodeValue);
+    for (let i = 0; i < (numberTexts - 1); i++) {
+        let newOption = document.createElement('option');
+        document.getElementById('choose_text_list').appendChild(newOption);
+    }
+
+    // filling choose text list with values
+    let textList = document.getElementById('choose_text_list');
+
+    for (let i = 0; i < textList.length; i++) {
+
+        textList[i].innerHTML = titles[i];
+
+    }
+
+    // filling title, author and text with initial values
+    let textTitle = document.getElementById('text_title');
+    let textAuthor = document.getElementById('text_author');
+
+    let textContentTemp = document.createElement('div');
+
+    textTitle.innerHTML = titles[0];
+    textAuthor.innerHTML = authors[0];
+    textContentTemp.innerHTML = texts[0];
+
+    let textContentTempNormal = textContentTemp.innerHTML;
+    let textContentTempLowerCase = textContentTemp.innerHTML.toLowerCase();  // adjusting letters case
+
+    // choosing correct letters case
+    if (ignoreCasesButtonChecked === true) {
+        textContentTemp.innerHTML = textContentTempLowerCase;
+    } else {
+        textContentTemp.innerHTML = textContentTempNormal;
+    }
+
+    prepareGame(textContentTemp, textAuthor);
+
+    window.changeTextList = function () {
+        // resetting values when setting changed
+        controlGameStop();
+        let typeHere = document.getElementById('type_here');
+        typeHere.value = "";
+        ignoreCasesButtonChecked = document.getElementById('ignore_cases').checked;
+
+
+        // filling title with values
+        for (let i = 0; i < textList.length; i++) {
+            textList[i].innerHTML = titles[i];
+        }
+
+        // get text language
+        let textLanguage;
+        if (languageEnglish.checked) {
+            textLanguage = "english";
+        }
+
+
+        // get text index
+        let textIndex;
+
+        for (let i = 0; i < textList.length; i++) {
+
+            if (textLanguage === "english" && titles[i] === chooseTextList.value) {
+                textIndex = i;
             }
         }
 
-        // creating additional options inside Choose text menu
-        let languageEnglish = document.getElementById('language_english');
-        let languageSwedish = document.getElementById('language_swedish');
-        let numberTexts;
+        // filling title, author and text with values
+        textTitle.innerHTML = titles[textIndex];
+        textAuthor.innerHTML = authors[textIndex];
+        textContentTemp.innerHTML = texts[textIndex];
 
-        if (languageEnglish.checked) {
-            numberTexts = textEnglishTitle.length;
-        } else {
-            numberTexts = textSwedishTitle.length;
-        }
-
-        for (let i = 0; i < (numberTexts - 1); i++) {
-            let newOption = document.createElement('option');
-            document.getElementById('choose_text_list').appendChild(newOption);
-        }
-
-        // filling choose text list with values
-        let textList = document.getElementById('choose_text_list');
-
-        for (let i = 0; i < textList.childElementCount; i++) {
-            if (languageEnglish.checked) {
-                textList[i].innerHTML = textEnglishTitle[i];
-            } else if (languageSwedish.checked) {
-                textList[i].innerHTML = textSwedishTitle[i];
-            }
-        }
-
-        // filling title, author and text with initial values
-        let textTitle = document.getElementById('text_title');
-        let textAuthor = document.getElementById('text_author');
-
-        let textContentTemp = document.createElement('div');
-
-        if (languageEnglish.checked) {
-            textTitle.innerHTML = textEnglishTitle[0];
-            textAuthor.innerHTML = textEnglishAuthor[0];
-            textContentTemp.innerHTML = textEnglishText[0];
-        } else if (languageSwedish.checked) {
-            textTitle.innerHTML = textSwedishTitle[0];
-            textAuthor.innerHTML = textSwedishAuthor[0];
-            textContentTemp.innerHTML = textSwedishText[0];
-        }
 
         let textContentTempNormal = textContentTemp.innerHTML;
-        let textContentTempLowerCase = textContentTemp.innerHTML.toLowerCase();  // adjusting letters case
+        let textContentTempLowerCase = textContentTemp.innerHTML.toLowerCase();
 
-        // choosing correct letters case
-        if (ignoreCasesButtonChecked === true){
+        if (ignoreCasesButtonChecked === true) {
             textContentTemp.innerHTML = textContentTempLowerCase;
         } else {
             textContentTemp.innerHTML = textContentTempNormal;
         }
 
         prepareGame(textContentTemp, textAuthor);
-
-        window.changeTextList = function() {
-            // resetting values when setting changed
-            controlGameStop();
-            let typeHere = document.getElementById('type_here');
-            typeHere.value = "";
-            ignoreCasesButtonChecked = document.getElementById('ignore_cases').checked;
-
-            let languageEnglish = document.getElementById('language_english');
-            let languageSwedish = document.getElementById('language_swedish');
-
-            // filling title with values
-            for (let i = 0; i < textList.childElementCount; i++) {
-                if (languageEnglish.checked) {
-                    textList[i].innerHTML = textEnglishTitle[i];
-                } else if (languageSwedish.checked) {
-                    textList[i].innerHTML = textSwedishTitle[i];
-                }
-            }
-
-            // get text language
-            let textLanguage;
-            if (languageEnglish.checked) {
-                textLanguage = "english";
-
-            } else if (languageSwedish.checked) {
-                textLanguage = "swedish";
-            }
-
-            // get text index
-            let textIndex;
-            for (let i = 0; i < textList.childElementCount; i++) {
-                if (textLanguage === "english" && textEnglishTitle[i] === chooseTextList.value) {
-                    textIndex = i;
-                } else if (textLanguage === "swedish" && textSwedishTitle[i] === chooseTextList.value) {
-                    textIndex = i;
-                }
-            }
-            // filling title, author and text with values
-            if (textLanguage === "english") {
-                textTitle.innerHTML = textEnglishTitle[textIndex];
-                textAuthor.innerHTML = textEnglishAuthor[textIndex];
-                textContentTemp.innerHTML = textEnglishText[textIndex];
-            } else if (textLanguage === "swedish") {
-                textTitle.innerHTML = textSwedishTitle[textIndex];
-                textAuthor.innerHTML = textSwedishAuthor[textIndex];
-                textContentTemp.innerHTML = textSwedishText[textIndex];
-            }
-
-            let textContentTempNormal = textContentTemp.innerHTML;
-            let textContentTempLowerCase = textContentTemp.innerHTML.toLowerCase();
-
-            if (ignoreCasesButtonChecked === true){
-                textContentTemp.innerHTML = textContentTempLowerCase;
-            } else {
-                textContentTemp.innerHTML = textContentTempNormal;
-            }
-
-            prepareGame(textContentTemp, textAuthor);
-        }
-
-
-        // event listeners
-        let chooseTextList = document.getElementById('choose_text_list');
-        chooseTextList.addEventListener('change', changeTextList);
-
-        let languageEnglishChange = document.getElementById('language_english');
-        languageEnglishChange.addEventListener('change', changeTextList);
-
-        let languageSwedishChange = document.getElementById('language_swedish');
-        languageSwedishChange.addEventListener('change', changeTextList);
-
-        let ignoreCasesChanged = document.getElementById('ignore_cases');
-        ignoreCasesChanged.addEventListener('change', changeTextList);
     }
-    xmlRequest.send();
+
+
+    // event listeners
+    let chooseTextList = document.getElementById('choose_text_list');
+    chooseTextList.addEventListener('change', changeTextList);
+
+    let languageEnglishChange = document.getElementById('language_english');
+    languageEnglishChange.addEventListener('change', changeTextList);
+
+    let ignoreCasesChanged = document.getElementById('ignore_cases');
+    ignoreCasesChanged.addEventListener('change', changeTextList);
+
+    let buttonStartStop = document.getElementById('control_button');
+
+    buttonStartStop.addEventListener('click', function () {
+        window.location.reload(true);
+    });
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -222,7 +167,7 @@ function prepareGame(textContTemp, textAuthor) {
     let textArrayWords = textContTemp.innerHTML.split(" ");
     let textArrayWordsSplit = [];
 
-    for (let i = 0; i < textArrayWords.length ; i++ ){
+    for (let i = 0; i < textArrayWords.length; i++) {
         textArrayWordsSplit.push(textArrayWords[i].split(""));
     }
 
@@ -275,13 +220,13 @@ function prepareFunctions(textContTemp, textArrayWords, textArrayWordsSplit) {
     // sound when mistype
     const sound = new Audio('audio/beep.wav');
 
-    window.controlGameStop = function() {
+    window.controlGameStop = function () {
         let buttonStartStop = document.getElementById('control_button');
         buttonStartStop.style.backgroundImage = "url('img/start_button.png')";
 
-        if (gameIsOn === true){
+        if (gameIsOn === false) {
             gameStop();
-            gameIsOn = false;
+            gameIsOn = true;
             typeHere.removeEventListener('keypress', controlWord);
         }
     }
@@ -292,12 +237,15 @@ function prepareFunctions(textContTemp, textArrayWords, textArrayWordsSplit) {
         buttonStartStop.style.backgroundImage = "url('img/start_button.png')";
         typeHere.removeEventListener('keypress', controlWord);
         typeHere.readOnly = true;
-        buttonStartStop.addEventListener('click', changeTextList);
+        buttonStartStop.addEventListener('click', function () {
+            window.location.reload(true);
+        });
     }
 
     function gameStart() {
         gameIsOn = true;
-
+        let chooseTextList = document.getElementById('choose_text_list');
+        chooseTextList.disabled = true;
         // change state button
         let buttonStartStop = document.getElementById('control_button');
         buttonStartStop.style.backgroundImage = "url('img/stop_button.png')";
@@ -317,7 +265,7 @@ function prepareFunctions(textContTemp, textArrayWords, textArrayWordsSplit) {
         numberCorrect = 0;
         // start the game
         countKeyPress++;
-        if (countKeyPress === 0){
+        if (countKeyPress === 0) {
             gameStart();
         }
 
@@ -332,7 +280,7 @@ function prepareFunctions(textContTemp, textArrayWords, textArrayWordsSplit) {
             if (currentIndex < textContTemp.innerHTML.length) {
                 textarea.children[currentIndex - 1].classList.remove('highlighter');
             }
-            if (currentIndex < textContTemp.innerHTML.length){
+            if (currentIndex < textContTemp.innerHTML.length) {
                 textarea.children[currentIndex].classList.add('highlighter');
             }
 
@@ -358,15 +306,15 @@ function prepareFunctions(textContTemp, textArrayWords, textArrayWordsSplit) {
             // change letter color to red if space key pressed too early
             indexOfLastLetter = currentIndex - 2;
             let redAdded = 0;
-            for (let i = indexWhenSpacePressed; i <= indexOfLastLetter ; i++ ){
-                    textarea.children[i].classList.add('redLetter');
-                    redAdded++;
+            for (let i = indexWhenSpacePressed; i <= indexOfLastLetter; i++) {
+                textarea.children[i].classList.add('redLetter');
+                redAdded++;
             }
             if ((currentIndex - indexOfLastLetter) === 2 &&
-                textarea.childNodes[indexOfLastLetter].className === 'redLetter'){
+                textarea.childNodes[indexOfLastLetter].className === 'redLetter') {
                 numberWrittenWords--;
             }
-            if (nextWordIndex > textContTemp.innerHTML.length){
+            if (nextWordIndex > textContTemp.innerHTML.length) {
                 gameStop();
             }
         }
@@ -391,21 +339,21 @@ function prepareFunctions(textContTemp, textArrayWords, textArrayWordsSplit) {
         }
 
         // checking end game condition
-        if ((currentIndex) === textContTemp.innerHTML.length){
+        if ((currentIndex) === textContTemp.innerHTML.length) {
             gameStop();
         }
 
-        for (let i = 0; i < textarea.childNodes.length ; i++ ){
-            if (textarea.childNodes[i].className === 'redLetter'){
+        for (let i = 0; i < textarea.childNodes.length; i++) {
+            if (textarea.childNodes[i].className === 'redLetter') {
                 numberErrors++;
             }
-            if (textarea.childNodes[i].className === 'grayLetter'){
+            if (textarea.childNodes[i].className === 'grayLetter') {
                 numberCorrect++;
             }
         }
 
         // play sound
-        if (numberErrorsTemp !== numberErrors){
+        if (numberErrorsTemp !== numberErrors) {
             sound.play();
         }
         numberErrorsTemp = numberErrors;
